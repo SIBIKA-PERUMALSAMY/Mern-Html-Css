@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Set the character encoding to UTF-8 for compatibility -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Set the title of the web page -->
+    <title>Random User Generator</title>
+</head>
+<style>
+    /* Style for the button */
+    #getRandomUser {
+        align-items: center;
+        background-color: aqua;
+        justify-content: center;
+    }
+    /* Style for the main container, centers content horizontally */
+    .mainDiv {
+        align-items: center;
+        justify-content: center;
+        padding-left: 46%;
+    }
+</style>
+<body>
+    <!-- Main heading for the page, centered and bold -->
+    <h1 style="font-weight: bolder; text-align: center;"> Random User Generator </h1>
+    <div class="mainDiv">
+        <!-- Button to trigger fetching of random user data -->
+        <button onclick="fetchData()" id="getRandomUser">Get random User</button>
+        
+        <!-- Div to display the full name of the random user -->
+        <div id="imp" class="imp"></div>
+        
+        <!-- Additional div to display only the first name of the random user -->
+        <div id="imp2"></div>
+    </div>
+    <script>
+        // Select the div with id 'imp' to display the full name later
+        let dummy = document.getElementById('imp');
+        
+        // Select the div with id 'imp2' to display the first name later
+        let dummy2 = document.getElementById('imp2');
+        
+        // Define the async function to fetch random user data from the API
+        async function fetchData() {
+            try {
+                // Fetch data from the randomuser.me API
+                let response = await fetch('https://randomuser.me/api/');
+                
+                // Convert the response to JSON format
+                let responseJson = await response.json();
+                
+                // Extract the first user object from the results array
+                let result = responseJson.results[0];
+                
+                // Get the title, first name, and last name from the user data
+                let title = result.name.title;
+                let firstName = result.name.first;
+                let lastName = result.name.last;
+                
+                // Display the full name in the 'imp' div
+                dummy.innerHTML = `${title} ${firstName} ${lastName}`;
+                
+                // Display only the first name in the 'imp2' div
+                dummy2.innerHTML = `${firstName}`;
+                
+            } catch (error) {
+                // Log any errors that occur during the fetch
+                console.log(error, 'error==========');
+            }
+        }
+    </script>
+</body>
+</html>
